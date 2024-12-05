@@ -1,0 +1,23 @@
+d_seg segment
+
+d_seg ends
+c_seg segment
+ assume cs:c_seg,ds:d_seg
+  start:mov ax,d_seg
+  	mov ds,ax
+  	mov ax,0b800h
+  	mov es,ax
+  	mov si,50
+cycl:	mov byte ptr es:[si],2
+	mov ah,0
+	int 16h
+	cmp ah,1
+	je quit
+	add si,100
+	jmp cycl
+	
+quit: 	
+	mov ah,4ch
+	int 21h
+c_seg ends		
+  end start	
